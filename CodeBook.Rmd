@@ -1,0 +1,33 @@
+---
+title: "CodeBook"
+author: "Abhee Brahmnalkar"
+date: "April 25, 2015"
+output: html_document
+---
+
+This codebook will explain the script run_analysis.R which was written by the author as a part of course project for the course "Getting and Cleaning Data"
+
+The first few lines of code check for existence of the folder "data" in the working directory and if absent will create it.  Then download and unzip the file containing the raw data.
+
+Variables from ActivityTest to FeaturesTrain (total of 6) systematically read the necessary files from the folder storing raw data.
+
+ActivityLabels variable stores all the activity labels in it.  The next line changes the column class to character.
+
+Next, features file is read and stored.  Again the column is forced to change class to character.  This is required for later use when we use values form this column as column header in the merged data.
+
+Subject, Features and Activity variables are created by merging the respective files for Subject, Features and Acitivity from the test and train folders.  Note that the sequence of train and test folders is maintained throughout the three merging commands.
+
+The next step gives column headers to merged data.  Subject and Activity are simple enough so those two names are given directly.
+for the reamining 561 variables we their names stored in Feature_Column_headers, so we use that variable to give column headers for Features variable.
+
+Using cbind, the merged varibles (Subject, Activity and Features) are combined to create a clean dataframe that can be used for further analysis.
+
+test1 and test2 are sample variables that extract only those variables that contain mean and std values.  After reading the documentation from raw data it is clear that the kind of variables that we are interested in as part of the project are the ones that end with mean() and std().  It is important to get "mean()" selected. If we try to select for only "mean" then additional un-necessary variables get selected.
+
+Next, a new dataframe is created called subset_data using cbind on Subject, Activity, test1 and test2.  This is THE dataframe that we are interested in.
+
+Next few lines of code, systematically change the Activity column values form numbers to actual names.  For this we use the Activity_Labels.
+
+Lastly we create a new dataframe called new_subset_data that groups the data by Subject and by activity and then proceeds to take mean for all other 66 variables.  
+
+
